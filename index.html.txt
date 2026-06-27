@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SanityOS | Next-Gen AI for Roblox Content Creation</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for Futuristic Look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Background Decorative Blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="nav-container glass">
+            <div class="logo">Sanity<span>OS</span></div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#docs">Documentation</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+            </ul>
+            <a href="https://create.roblox.com/" target="_blank" class="btn btn-secondary">Install Plugin</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="badge glass">✨ SanityOS v5.0 Omni-Kernel Now Live</div>
+            <h1>Breathe Life Into Your Roblox Worlds With <span>AI Automation</span></h1>
+            <p>Generate highly optimized Luau scripts, build premium UI layouts, and construct complex RNG mechanics inside Roblox Studio instantly. Work smarter, build faster.</p>
+            <div class="hero-actions">
+                <button class="btn btn-primary">Get Started for Free</button>
+                <a href="#features" class="btn btn-outline">Explore Capabilities</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Features Grid -->
+    <section id="features" class="features-section">
+        <h2 class="section-title">Engineered For Modern Creators</h2>
+        <div class="features-grid">
+            
+            <div class="feature-card glass">
+                <div class="icon">⚡</div>
+                <h3>Advanced Luau Engine</h3>
+                <p>Generate clean, optimized server scripts and framework structures instantly. Fully integrated with standard Roblox services.</p>
+            </div>
+
+            <div class="feature-card glass">
+                <div class="icon">🎨</div>
+                <h3>Glassmorphic UI Generator</h3>
+                <p>Generate clean, professional, and futuristic interface designs tailored directly to your game's unique style framework.</p>
+            </div>
+
+            <div class="feature-card glass">
+                <div class="icon">🎲</div>
+                <h3>RNG & Simulator Toolkits</h3>
+                <p>Deploy full rarity indices, mutation tables, and data persistence modules without handling redundant backend logic.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 SanityOS. Powered by next-gen AI automation workflows. Not affiliated with Roblox Corporation.</p>
+    </footer>
+
+</body>
+</html>
