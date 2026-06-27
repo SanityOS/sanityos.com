@@ -1,1 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SanityOS Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Welcome to SanityOS</h1>
+    <div id="credit-display">Loading your credits...</div>
 
+    <textarea id="ai-prompt" placeholder="Ask the AI (costs 5 credits)"></textarea>
+    <button onclick="runAI()">Generate Script</button>
+
+    <script>
+        const supabase = supabase.createClient('https://odvnpzugmjuhpdxeibyf.supabase.co', 'sb_publishable_8CijJp8O7Iv2Xt2QjiCamA_cEv5D6Yc');
+
+        async function loadDashboard() {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) window.location.href = '/login.html'; // Kick them out if not logged in
+            
+            // Fetch their credits from your 'profiles' table
+            const { data } = await supabase.from('profiles').select('credits').eq('id', user.id).single();
+            document.getElementById('credit-display').innerText = "Credits: " + data.credits;
+        }
+
+        loadDashboard();
+    </script>
+</body>
+</html>
