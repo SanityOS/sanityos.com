@@ -1,1 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SanityOS Login</title>
+    <!-- Include Supabase client library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h2>Sign Up / Login</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="signUp()">Sign Up</button>
 
+    <script>
+        const supabase = supabase.createClient('https://odvnpzugmjuhpdxeibyf.supabase.co', 'sb_publishable_8CijJp8O7Iv2Xt2QjiCamA_cEv5D6Yc');
+
+        async function signUp() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const { data, error } = await supabase.auth.signUp({ email, password });
+            if (error) alert(error.message);
+            else alert('Check your email for confirmation!');
+        }
+    </script>
+</body>
+</html>
