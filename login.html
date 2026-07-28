@@ -1,25 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>SanityOS Login</title>
-    <!-- Include Supabase client library -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SanityOS | Portal Login</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <h2>Sign Up / Login</h2>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="signUp()">Sign Up</button>
+    <div class="blob blob-1"></div>
+    <div style="display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px;">
+        <div class="glass" style="max-width: 400px; width: 100%; padding: 40px; text-align: center;">
+            <div class="logo" style="margin-bottom: 24px;">Sanity<span>OS</span></div>
+            <h2 style="margin-bottom: 20px;">Access Workspace</h2>
+            
+            <input type="email" id="email" placeholder="Developer Email" style="width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-dark); color: white;">
+            <input type="password" id="password" placeholder="Password" style="width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-dark); color: white;">
+            
+            <div style="display: flex; gap: 10px; flex-direction: column;">
+                <button onclick="handleLogin()" class="btn btn-primary" style="width: 100%;">Sign In</button>
+                <button onclick="handleSignUp()" class="btn btn-outline" style="width: 100%;">Create Account</button>
+            </div>
+            <p id="msg" style="margin-top: 16px; font-size: 13px; color: var(--text-muted);"></p>
+        </div>
+    </div>
 
     <script>
         const supabase = supabase.createClient('https://odvnpzugmjuhpdxeibyf.supabase.co', 'sb_publishable_8CijJp8O7Iv2Xt2QjiCamA_cEv5D6Yc');
 
-        async function signUp() {
+        async function handleLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            
+            if (error) {
+                document.getElementById('msg').innerText = error.message;
+            } else {
+                window.location.href = 'dashboard.html';
+            }
+        }
+
+        async function handleSignUp() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const { data, error } = await supabase.auth.signUp({ email, password });
-            if (error) alert(error.message);
-            else alert('Check your email for confirmation!');
+            
+            if (error) {
+                document.getElementById('msg').innerText = error.message;
+            } else {
+                document.getElementById('msg').innerText = 'Check your email for confirmation link!';
+            }
         }
     </script>
 </body>
