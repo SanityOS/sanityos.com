@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SanityOS | Next-Gen AI for Roblox Content Creation</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts for Futuristic Look -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Supabase JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -22,10 +24,13 @@
             <div class="logo">Sanity<span>OS</span></div>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
-                <li><a href="#docs">Documentation</a></li>
                 <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#waitlist">Waitlist</a></li>
             </ul>
-            <a href="https://create.roblox.com/" target="_blank" class="btn btn-secondary">Install Plugin</a>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <a href="https://create.roblox.com/" target="_blank" class="btn btn-secondary">Install Plugin</a>
+                <a href="login.html" id="nav-auth-btn" class="btn btn-primary">Login</a>
+            </div>
         </nav>
     </header>
 
@@ -36,7 +41,7 @@
             <h1>Breathe Life Into Your Roblox Worlds With <span>AI Automation</span></h1>
             <p>Generate highly optimized Luau scripts, build premium UI layouts, and construct complex RNG mechanics inside Roblox Studio instantly. Work smarter, build faster.</p>
             <div class="hero-actions">
-                <button class="btn btn-primary">Get Started for Free</button>
+                <a href="login.html" id="hero-auth-btn" class="btn btn-primary">Get Started for Free</a>
                 <a href="#features" class="btn btn-outline">Explore Capabilities</a>
             </div>
         </div>
@@ -68,22 +73,75 @@
         </div>
     </section>
 
-<!-- Waitlist Section -->
-<section id="waitlist" class="features-section">
-    <h2 class="section-title">Join the Waitlist</h2>
-    <div class="glass" style="max-width: 600px; margin: 0 auto; padding: 40px; text-align: center;">
-        <p style="margin-bottom: 24px;">Be the first to access the next version of SanityOS. Get early updates and feature previews.</p>
-        <form action="https://formspree.io/f/xlgynbjr" method="POST" style="display: flex; gap: 10px; justify-content: center;">
-            <input type="email" placeholder="Enter your email" required style="padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-dark); color: white; width: 100%;">
-            <button type="submit" class="btn btn-primary">Join</button>
-        </form>
-    </div>
-</section>
-    
+    <!-- Pricing Plans Section -->
+    <section id="pricing" class="features-section">
+        <h2 class="section-title">Flexible Developer Plans</h2>
+        <div class="features-grid">
+            
+            <div class="feature-card glass" style="text-align: center;">
+                <h3>Starter</h3>
+                <p style="font-size: 28px; font-weight: 700; color: #fff; margin: 16px 0;">Free</p>
+                <p style="margin-bottom: 24px;">50 Initial Credits upon sign-up to test basic Luau generation.</p>
+                <a href="login.html" class="btn btn-outline" style="width: 100%;">Create Account</a>
+            </div>
+
+            <div class="feature-card glass" style="text-align: center; border-color: var(--accent-blue);">
+                <div class="badge glass" style="margin-bottom: 8px;">Popular</div>
+                <h3>Pro Creator</h3>
+                <p style="font-size: 28px; font-weight: 700; color: #fff; margin: 16px 0;">$9.99 <span style="font-size: 14px; color: var(--text-muted);">/mo</span></p>
+                <p style="margin-bottom: 24px;">1,000 Credits monthly + priority execution for complex simulator frameworks.</p>
+                <a href="login.html" class="btn btn-primary" style="width: 100%;">Upgrade to Pro</a>
+            </div>
+
+            <div class="feature-card glass" style="text-align: center;">
+                <h3>Studio Enterprise</h3>
+                <p style="font-size: 28px; font-weight: 700; color: #fff; margin: 16px 0;">$29.99 <span style="font-size: 14px; color: var(--text-muted);">/mo</span></p>
+                <p style="margin-bottom: 24px;">Unlimited AI calls, dedicated API keys for full studio teams & custom plugin access.</p>
+                <a href="login.html" class="btn btn-outline" style="width: 100%;">Get Enterprise</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Waitlist Section -->
+    <section id="waitlist" class="features-section">
+        <h2 class="section-title">Join the Waitlist</h2>
+        <div class="glass" style="max-width: 600px; margin: 0 auto; padding: 40px; text-align: center;">
+            <p style="margin-bottom: 24px;">Be the first to access the next version of SanityOS. Get early updates and feature previews.</p>
+            <form action="https://formspree.io/f/xlgynbjr" method="POST" style="display: flex; gap: 10px; justify-content: center;">
+                <input type="email" name="email" placeholder="Enter your email" required style="padding: 12px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--bg-dark); color: white; width: 100%;">
+                <button type="submit" class="btn btn-primary">Join</button>
+            </form>
+        </div>
+    </section>
+        
     <!-- Footer -->
     <footer>
         <p>&copy; 2026 SanityOS. Powered by next-gen AI automation workflows. Not affiliated with Roblox Corporation.</p>
     </footer>
+
+    <!-- Auth State Checker Script -->
+    <script>
+        const supabase = supabase.createClient('https://odvnpzugmjuhpdxeibyf.supabase.co', 'sb_publishable_8CijJp8O7Iv2Xt2QjiCamA_cEv5D6Yc');
+
+        async function checkAuthState() {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                const navBtn = document.getElementById('nav-auth-btn');
+                const heroBtn = document.getElementById('hero-auth-btn');
+                
+                if (navBtn) {
+                    navBtn.innerText = 'Dashboard';
+                    navBtn.href = 'dashboard.html';
+                }
+                if (heroBtn) {
+                    heroBtn.innerText = 'Open Dashboard';
+                    heroBtn.href = 'dashboard.html';
+                }
+            }
+        }
+        checkAuthState();
+    </script>
 
 </body>
 </html>
