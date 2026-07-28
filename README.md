@@ -1,16 +1,12 @@
-# SanityOS
-Breathe life into your Roblox worlds with AI automation. 
+# SanityOS 🚀
+> **Breathe life into your Roblox worlds with AI-powered automation.**
 
-## About
-SanityOS is a next-gen AI-powered platform designed to streamline Roblox content creation. From generating highly optimized Luau scripts to constructing complex RNG mechanics and futuristic UI layouts, SanityOS helps developers work smarter and build faster.
+SanityOS is an AI workspace and Roblox Studio plugin designed to supercharge game development. From generating optimized Luau server architecture to designing futuristic UI layouts and balancing RNG tables, SanityOS helps developers build faster and scale effortlessly.
 
-## Features
-- **Advanced Luau Engine**: Generate clean, optimized server scripts and framework structures instantly.
-- **Glassmorphic UI Generator**: Create professional, futuristic interfaces tailored to your game's unique style.
-- **RNG & Simulator Toolkits**: Easily deploy rarity indices, mutation tables, and data persistence modules.
-
-## Get Started
-[Visit our website](https://sanityos.com) to learn more about our v5.0 Omni-Kernel and how to integrate our AI workflows into your projects.
+### ✨ Key Features
+* ⚡ **Advanced Luau Engine**: Instantly generate modular, clean server/client scripts tailored for Roblox standards.
+* 🎨 **Glassmorphic UI Generator**: Auto-create modern, customizable interface structures.
+* 🎲 **RNG & Simulator Toolkits**: Easily construct drop rates, mutation tables, and persistent data structures.
 
 ---
-*Powered by next-gen AI automation. Not affiliated with Roblox Corporation.*
+*Not affiliated with or endorsed by Roblox Corporation.*
