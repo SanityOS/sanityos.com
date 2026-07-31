@@ -10,3 +10,4 @@ SanityOS is an AI workspace and Roblox Studio plugin designed to supercharge gam
 
 ---
 *Not affiliated with or endorsed by Roblox Corporation.*
+https://sanityos.com/
