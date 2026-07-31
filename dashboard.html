@@ -1,65 +1,190 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SanityOS | Workspace</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SanityOS — Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+  <meta name="supabase-url" content="<!-- SUPABASE_URL -->">
+  <meta name="supabase-key" content="<!-- SUPABASE_ANON_KEY -->">
 </head>
-<body>
-    <div class="blob blob-1"></div>
+<body class="dashboard-shell">
+  <aside class="sidebar glass" id="sidebar">
+    <div class="sidebar-top">
+      <div class="logo">SanityOS</div>
+      <nav class="nav">
+        <a class="sidebar-item active" data-view="home">Home</a>
+        <a class="sidebar-item" data-view="workspace">AI Workspace</a>
+        <a class="sidebar-item" data-view="projects">Projects</a>
+        <a class="sidebar-item" data-view="plugins">Plugin</a>
+        <a class="sidebar-item" data-view="credits">Credits</a>
+        <a class="sidebar-item" data-view="billing">Billing</a>
+        <a class="sidebar-item" data-view="downloads">Downloads</a>
+        <a class="sidebar-item" data-view="docs">Documentation</a>
+        <a class="sidebar-item" data-view="community">Community</a>
+        <a class="sidebar-item" data-view="changelog">Changelog</a>
+        <a class="sidebar-item" data-view="settings">Settings</a>
+        <a class="sidebar-item" data-view="help">Help</a>
+      </nav>
+    </div>
 
-    <header>
-        <nav class="nav-container glass">
-            <div class="logo">Sanity<span>OS</span></div>
-            <div id="credit-display" class="badge glass">Loading credits...</div>
-            <button onclick="signOut()" class="btn btn-outline">Sign Out</button>
-        </nav>
-    </header>
-
-    <main class="hero-section" style="padding-top: 140px;">
-        <div class="glass" style="padding: 40px; text-align: left; max-width: 800px; margin: 0 auto;">
-            <h2>Luau Script & Architecture Generator</h2>
-            <p style="margin-bottom: 20px; font-size: 14px;">Describe the game mechanic, RNG system, or module you need for Roblox Studio.</p>
-
-            <textarea id="ai-prompt" placeholder="e.g., Create a DataStore2 Leaderstats script with automated saving and pet multiplier logic..." style="width: 100%; height: 120px; padding: 16px; border-radius: 12px; border: 1px solid var(--glass-border); background: var(--bg-dark); color: white; font-family: inherit; resize: vertical; margin-bottom: 16px;"></textarea>
-
-            <button onclick="runAI()" class="btn btn-primary">Generate Script (5 Credits)</button>
-
-            <div id="output-box" style="display: none; margin-top: 24px;">
-                <h3>Output</h3>
-                <pre id="code-output" style="background: rgba(0,0,0,0.5); padding: 16px; border-radius: 8px; border: 1px solid var(--glass-border); overflow-x: auto; color: #60a5fa; margin-top: 8px;"></pre>
-            </div>
+    <div class="sidebar-bottom">
+      <div class="user">
+        <img src="/avatar.png" alt="avatar" class="avatar" id="avatar" />
+        <div class="user-meta">
+          <div id="display-name">—</div>
+          <div class="muted small" id="user-email">—</div>
         </div>
-    </main>
+      </div>
+      <div class="sidebar-actions">
+        <button class="btn btn-outline" id="theme-toggle">Theme</button>
+        <button class="btn btn-outline" id="signout">Sign Out</button>
+      </div>
+    </div>
+  </aside>
 
-    <script>
-        const supabase = supabase.createClient('https://odvnpzugmjuhpdxeibyf.supabase.co', 'sb_publishable_8CijJp8O7Iv2Xt2QjiCamA_cEv5D6Yc');
+  <main class="main-content" id="main">
+    <!-- Home view -->
+    <section class="view" id="view-home">
+      <div class="banner glass">
+        <h2>Welcome back, <span id="welcome-name">—</span></h2>
+        <div class="tier badge" id="tier-badge">Free</div>
+        <div class="credits">Credits: <strong id="credit-count">0</strong></div>
+      </div>
 
-        async function loadDashboard() {
-            const { data: { user } } = await supabase.auth.getUser();
-            if (!user) {
-                window.location.href = 'login.html';
-                return;
-            }
-            
-            const { data, error } = await supabase.from('profiles').select('credits').eq('id', user.id).single();
-            if (data) {
-                document.getElementById('credit-display').innerText = `⚡ Credits: ${data.credits ?? 0}`;
-            }
-        }
+      <div class="grid-2">
+        <div class="card glass">
+          <h3>Plugin Installation</h3>
+          <p>Install the Studio plugin to enable live telemetry.</p>
+          <div class="plugin-telemetry muted" id="plugin-telemetry">
+            <div>Status: <span class="status">Disconnected</span></div>
+            <div>Version: <span class="version">—</span></div>
+            <div>Last Sync: <span class="last-sync">—</span></div>
+            <div>Workspace: <span class="workspace">—</span></div>
+            <div>Connected Since: <span class="connected-since">—</span></div>
+          </div>
+          <div class="row">
+            <button class="btn btn-primary" id="download-plugin">Download Plugin</button>
+            <button class="btn btn-outline" id="connect-plugin">Connect</button>
+          </div>
+        </div>
 
-        async function signOut() {
-            await supabase.auth.signOut();
-            window.location.href = 'login.html';
-        }
+        <div class="card glass">
+          <h3>License Key</h3>
+          <div class="license">
+            <code id="license-key">SOS-000000-000000</code>
+            <button class="btn btn-outline" id="copy-license">Copy</button>
+            <button class="btn btn-primary" id="download-license">Download</button>
+          </div>
+          <p class="muted">Manage your license and downloads here.</p>
+        </div>
+      </div>
 
-        async function runAI() {
-            alert("API logic goes here — connect to an OpenAI/Gemini Edge Function!");
-        }
+      <section class="workspace-cards">
+        <h3>AI Workspace (Coming Soon)</h3>
+        <div class="card-grid">
+          <div class="card glass">
+            <h4>AI Chat <span class="badge">Coming Soon</span></h4>
+          </div>
+          <div class="card glass">
+            <h4>AI Code Generator <span class="badge">Coming Soon</span></h4>
+          </div>
+          <div class="card glass">
+            <h4>AI Agent <span class="badge">Coming Soon</span></h4>
+          </div>
+          <div class="card glass">
+            <h4>AI Automation <span class="badge">Coming Soon</span></h4>
+          </div>
+        </div>
+      </section>
 
-        loadDashboard();
-    </script>
+      <section class="activity log card glass">
+        <h3>Recent Activity</h3>
+        <ul id="activity-log" class="muted">
+          <li>No recent activity</li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- Settings view -->
+    <section class="view hidden" id="view-settings">
+      <h2>Settings</h2>
+      <div class="tabs">
+        <button data-tab="profile" class="tab active">Profile</button>
+        <button data-tab="appearance" class="tab">Appearance</button>
+        <button data-tab="plugin" class="tab">Plugin Management</button>
+        <button data-tab="billing" class="tab">Billing / Plans</button>
+      </div>
+
+      <div class="tab-panels">
+        <div id="profile" class="panel active card glass">
+          <h4>Profile</h4>
+          <label>Display name<input id="profile-name" /></label>
+          <label>Company<input id="profile-company" /></label>
+          <button class="btn btn-primary" id="save-profile">Save</button>
+        </div>
+
+        <div id="appearance" class="panel card glass muted">
+          <h4>Appearance</h4>
+          <label>Theme<select id="appearance-theme"><option value="dark">Dark</option><option value="light">Light</option></select></label>
+        </div>
+
+        <div id="plugin" class="panel card glass muted">
+          <h4>Plugin Management</h4>
+          <p>Installed plugins and telemetry configuration.</p>
+        </div>
+
+        <div id="billing" class="panel card glass muted">
+          <h4>Billing / Plans</h4>
+          <ul>
+            <li>Free — 100 credits / mo</li>
+            <li>Pro — 2,000 credits / mo</li>
+            <li>Ultra — custom</li>
+            <li>Enterprise — contact sales</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Changelog -->
+    <section class="view hidden" id="view-changelog">
+      <h2>Changelog</h2>
+      <div class="timeline card glass">
+        <div class="entry"><strong>v0.3.0</strong><p>Performance improvements, plugin telemetry beta.</p></div>
+        <div class="entry"><strong>v0.2.0</strong><p>Initial billing + credits system.</p></div>
+        <div class="entry"><strong>v0.1.0</strong><p>Private alpha launch.</p></div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="/app.js"></script>
+  <script>
+    // Simple view router
+    document.querySelectorAll('.sidebar-item').forEach(el => el.addEventListener('click', () => {
+      document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+      el.classList.add('active');
+      const view = el.dataset.view;
+      document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+      const target = document.getElementById('view-' + view) || document.getElementById('view-home');
+      target.classList.remove('hidden');
+    }));
+
+    // Plugin button wiring
+    document.getElementById('download-plugin').addEventListener('click', () => alert('Plugin download will start.'));
+    document.getElementById('connect-plugin').addEventListener('click', () => alert('Connect flow coming soon.'));
+
+    // License copy
+    document.getElementById('copy-license').addEventListener('click', async () => {
+      const key = document.getElementById('license-key').innerText;
+      await navigator.clipboard.writeText(key);
+      alert('License copied');
+    });
+
+    document.getElementById('signout').addEventListener('click', () => window.SanityAuth && window.SanityAuth.signOut());
+
+    // Small theme toggle
+    document.getElementById('theme-toggle').addEventListener('click', () => document.documentElement.classList.toggle('light'));
+  </script>
 </body>
 </html>
